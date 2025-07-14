@@ -25,9 +25,18 @@ jobs:
           python -m pip install --upgrade pip 
           pip install pytest streamlit 
 
+      - name: List files and check test file
+        run: |
+          ls -la
+          echo "Content of _test.py:"
+          head -5 _test.py
+          echo "Checking Python syntax:"
+          python -m py_compile _test.py
+
       - name: Run tests
         run: |
-          pytest _test.py
+          echo "Running pytest with discovery"
+          python -m pytest _test.py -v --tb=short
           
       - name: Verify app can be imported
         run: |
